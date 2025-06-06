@@ -80,3 +80,5 @@ set(YAML_INCL ${YAML_CORE}/build/native/include)
 set(YAML_LIB  ${YAML_CORE}/runtimes/linux-x64/native/Release/libyaml-cpp.so.0.8.0)
 set(YAML_BIN  ${YAML_LIB})
 set(YAML_LIB_NAME libyaml-cpp.so.0.8.0)
+
+# TODO: ixray-team add lunasvg please

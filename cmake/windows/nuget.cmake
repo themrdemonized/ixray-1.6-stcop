@@ -109,3 +109,10 @@ set(YAML_INCL ${YAML_CORE}/build/native/include)
 set(YAML_LIB  ${YAML_CORE}/runtimes/win-x64/native/Release/yaml-cpp.lib)
 set(YAML_BIN  ${YAML_CORE}/runtimes/win-x64/native/Release/yaml-cpp.dll)
 set(YAML_LIB_NAME yaml-cpp.dll)
+
+
+# lunaSVG
+set(IXR_LUNASVG_PACKAGE ${CMAKE_BINARY_DIR}/packages/ixray.lunasvg.3.3.0/)
+set(IXR_LUNASVG_BIN ${IXR_LUNASVG_PACKAGE}bin/lunasvg.dll)
+set(IXR_LUNASVG_INC ${IXR_LUNASVG_PACKAGE}include)
+set(IXR_LUNASVG_LIB ${IXR_LUNASVG_PACKAGE}lib/lunasvg.lib)
