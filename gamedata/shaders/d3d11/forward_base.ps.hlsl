@@ -73,7 +73,14 @@ void main(p_bumped_new I, out f_forward O)
 	//Sample cascades
 	int cascade_index;
 	float3 smap_texcoord;
+	
+#ifndef USE_LENGTH_BUFFER
 	bool is_in_bounds = calc_cascades(Point.xyz, m_shadow_sun, cascade_index, smap_texcoord);
+#else
+	bool is_in_bounds = true; cascade_index = 3;
+	float4 temp = mul(m_shadow_sun[2], float4(Point.xyz, 1.0));
+	smap_texcoord = temp.xyz / temp.w;
+#endif
 
 	float Shadow = 1.0;
 
