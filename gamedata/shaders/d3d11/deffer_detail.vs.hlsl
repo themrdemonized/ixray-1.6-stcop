@@ -1,18 +1,5 @@
 #include "common.hlsli"
 
-cbuffer DetailConstants
-{
-    float4 consts;
-
-    float4 wave;
-    float4 wave_old;
-
-    float4 dir2D;
-    float4 dir2D_old;
-
-    float2x4 array[61];
-};
-
 float3x3 setMatrix (float3 hpb)
 {
         
