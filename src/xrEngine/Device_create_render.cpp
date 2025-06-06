@@ -234,6 +234,8 @@ bool CRenderDevice::InitRenderDevice(APILevel API)
 				ImGui::MenuItem("Search Manager", nullptr, &States[static_cast<u8>(EditorUI::Game_SearchManager)]);
 				ImGui::MenuItem("Weather Editor", nullptr, &States[static_cast<u8>(EditorUI::Weather)]);
 				//ImGui::MenuItem("Time Manager", nullptr, &States[static_cast<u8>(EditorUI::Game_TimeManager)]);
+
+				ImGui::MenuItem("Audio Manager", nullptr, &States[static_cast<u8>(EditorUI::Audio_General)]);
 				ImGui::MenuItem("Hud Adjust", nullptr, &States[static_cast<u8>(EditorUI::Game_HudAdjustManager)]);
 				ImGui::MenuItem("Hud Adjust (Legacy)", nullptr, &States[static_cast<u8>(EditorUI::HudAdjust)]);
 

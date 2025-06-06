@@ -22,17 +22,16 @@ struct HUD_SOUND_ITEM
 
 	ICF BOOL		playing			()
 	{
-        if (m_activeSnd)
-            return m_activeSnd->snd._feedback() ? TRUE : FALSE;
-        else
-            return FALSE;
+		if (m_activeSnd) return m_activeSnd->snd.is_playing();
+		else return false;
+		//if (m_activeSnd)	return	m_activeSnd->snd.slot()?TRUE:FALSE;
+		//else				return	FALSE;
 	}
 
 	ICF void		set_position	(	const Fvector& pos)
 	{
-        if (m_activeSnd)
-        {
-			if (m_activeSnd->snd._feedback()&&!m_activeSnd->snd._feedback()->is_2D())	
+		if(m_activeSnd)	{ 
+			if (m_activeSnd->snd.slot()&&!m_activeSnd->snd._p->is_2d())	
 									m_activeSnd->snd.set_position	(pos);
             else
                 m_activeSnd = NULL;

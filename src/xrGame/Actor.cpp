@@ -538,7 +538,7 @@ struct playing_pred
 {
 	IC	bool	operator()			(ref_sound &s)
 	{
-		return	(nullptr != s._feedback() );
+		return	(s.is_playing() );
 	}
 };
 
@@ -1175,7 +1175,7 @@ void CActor::PlayRainOnHelmetSound()
 		return;
 	}
 
-	if (!m_rainOnHelmetSnd._handle())
+	if (!m_rainOnHelmetSnd.slot())
 	{
 		return;
 	}
@@ -1198,7 +1198,7 @@ void CActor::PlayRainOnHelmetSound()
 		hemiValue = _max(hemiValue, hemiCube[3]);
 		hemiValue = _max(hemiValue, hemiCube[5]);
 
-		if (m_rainOnHelmetSnd._feedback())
+		if (m_rainOnHelmetSnd.is_playing())
 		{
 			m_rainOnHelmetSnd.set_volume(hemiValue <= 0.3f ? 0.0f : 1.0f);
 		}
@@ -1786,12 +1786,12 @@ void CActor::shedule_Update	(u32 DT)
 	if(this==Level().CurrentControlEntity() && !g_dedicated_server )
 	{
 		if(conditions().IsLimping() && g_Alive() && !psActorFlags.test(AF_DISABLE_CONDITION_TEST)){
-			if(!m_HeavyBreathSnd._feedback()){
+			if(!m_HeavyBreathSnd.is_playing()){
 				m_HeavyBreathSnd.play_at_pos(this, Fvector().set(0,ACTOR_HEIGHT,0), sm_Looped | sm_2D);
 			}else{
 				m_HeavyBreathSnd.set_position(Fvector().set(0,ACTOR_HEIGHT,0));
 			}
-		}else if(m_HeavyBreathSnd._feedback()){
+		}else if(m_HeavyBreathSnd.is_playing()){
 			m_HeavyBreathSnd.stop		();
 		}
 
@@ -1801,7 +1801,7 @@ void CActor::shedule_Update	(u32 DT)
 		{
 			Fvector snd_pos;
 			snd_pos.set(0,ACTOR_HEIGHT,0);
-			if(!m_BloodSnd._feedback())
+			if(!m_BloodSnd.is_playing())
 				m_BloodSnd.play_at_pos(this, snd_pos, sm_Looped | sm_2D);
 			else
 				m_BloodSnd.set_position(snd_pos);
@@ -1810,11 +1810,11 @@ void CActor::shedule_Update	(u32 DT)
 
 			m_BloodSnd.set_volume	(v);
 		}else{
-			if(m_BloodSnd._feedback())
+			if(m_BloodSnd.is_playing())
 				m_BloodSnd.stop();
 		}
 
-		if(!g_Alive()&&m_BloodSnd._feedback())
+		if(!g_Alive()&&m_BloodSnd.is_playing())
 				m_BloodSnd.stop();
 		// -------------------------------
 		bs = conditions().GetZoneDanger();
@@ -1822,7 +1822,7 @@ void CActor::shedule_Update	(u32 DT)
 		{
 			Fvector snd_pos;
 			snd_pos.set(0,ACTOR_HEIGHT,0);
-			if(!m_DangerSnd._feedback())
+			if(!m_DangerSnd.is_playing())
 				m_DangerSnd.play_at_pos(this, snd_pos, sm_Looped | sm_2D);
 			else
 				m_DangerSnd.set_position(snd_pos);
@@ -1834,11 +1834,11 @@ void CActor::shedule_Update	(u32 DT)
 		}
 		else
 		{
-			if(m_DangerSnd._feedback())
+			if(m_DangerSnd.is_playing())
 				m_DangerSnd.stop();
 		}
 
-		if(!g_Alive()&&m_DangerSnd._feedback())
+		if(!g_Alive()&&m_DangerSnd.is_playing())
 			m_DangerSnd.stop();
 	}
 	
