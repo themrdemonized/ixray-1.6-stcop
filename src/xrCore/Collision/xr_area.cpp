@@ -114,11 +114,11 @@ void CObjectSpace::Load(IReader* F, CDB::build_callback build_callback)
 	g_SpatialSpacePhysic->initialize(m_BoundingVolume);
 	g_SpatialSpaceLights->initialize(m_BoundingVolume);
 
-	static DWORD this_thread_id = 0;
-	this_thread_id = GetCurrentThreadId();
+	static size_t this_thread_id = 0;
+	this_thread_id = Platform::GetThreadId(Platform::GetCurrentThread());
 	Static.async_cform_load.run([=]()
 	{
-		if (this_thread_id != GetCurrentThreadId()) { PROF_THREAD("X-Ray PPL Thread") }
+		if (this_thread_id != Platform::GetThreadId(Platform::GetCurrentThread())) { PROF_THREAD("X-Ray PPL Thread") }
 		PROF_EVENT("Async cform loading");
 		Fvector* verts = (Fvector*)pReader->pointer();
 		CDB::TRI* tris = (CDB::TRI*)(verts + H.vertcount);
