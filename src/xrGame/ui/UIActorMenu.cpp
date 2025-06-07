@@ -78,7 +78,6 @@ void CUIActorMenu::SetPartner(CInventoryOwner* io)
 	if (m_pPartnerInvOwner)
 	{
 		CBaseMonster* pMonster = smart_cast<CBaseMonster*>(m_pPartnerInvOwner);
-		CCar* pCar = smart_cast<CCar*>(m_pPartnerInvOwner);
 
 		if (pMonster || m_pPartnerInvOwner->use_simplified_visual())
 		{
@@ -96,7 +95,7 @@ void CUIActorMenu::SetPartner(CInventoryOwner* io)
 				m_PartnerCharacterInfo->InitCharacter("", icon);
 			}
 		}
-		else if (pCar != nullptr)
+		else if (CCar* pCar = m_pPartnerInvOwner->cast_car())
 		{
 			if (pSettings->line_exist(pCar->cNameSect(), "icon"))
 			{
@@ -578,9 +577,6 @@ void CUIActorMenu::highlight_item_slot(CUICellItem* cell_item)
 		return;
 	}
 
-	CEatableItem* eatable = item->cast_eatable_item();
-	CArtefact* artefact = item->cast_artefact();
-
 	u16 slot_id = item->BaseSlot();
 	if (slot_id == INV_SLOT_2 || slot_id == INV_SLOT_3)
 	{
@@ -603,8 +599,7 @@ void CUIActorMenu::highlight_item_slot(CUICellItem* cell_item)
 		return;
 	}
 
-
-	if (eatable)
+	if (CEatableItem* eatable = item->cast_eatable_item())
 	{
 		if (cell_item->OwnerList() && GetListType(cell_item->OwnerList()) == iQuickSlot)
 		{
@@ -620,7 +615,8 @@ void CUIActorMenu::highlight_item_slot(CUICellItem* cell_item)
 		}
 		return;
 	}
-	if (artefact)
+
+	if (CArtefact* artefact = item->cast_artefact())
 	{
 		if (cell_item->OwnerList() && GetListType(cell_item->OwnerList()) == iActorBelt)
 		{
