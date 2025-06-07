@@ -77,5 +77,7 @@ public:
 	virtual void	afterDetach				();
 	virtual void	renderable_Render		(IDSGraphManager* DM = nullptr);
 
+	virtual CTorch* cast_torch() { return this; }
+
 	DECLARE_SCRIPT_REGISTER_FUNCTION
 };
