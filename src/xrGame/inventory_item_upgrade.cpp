@@ -202,16 +202,14 @@ bool CInventoryItem::install_upgrade_impl( LPCSTR section, bool test )
 
 void CInventoryItem::pre_install_upgrade()
 {
-	CWeaponMagazined* wm = smart_cast<CWeaponMagazined*>( this );
-	if ( wm )
+	if (CWeaponMagazined* wm = cast_weapon_magazined())
 	{
 		wm->UnloadMagazine();
 		wm->UnloadChamber();
 
-		CWeaponMagazinedWGrenade* wg = smart_cast<CWeaponMagazinedWGrenade*>( this );
-		if ( wg )
+		if (CWeaponMagazinedWGrenade* wg = cast_weapon_magazined_w_grenade())
 		{
-			if ( wg->IsGrenadeLauncherAttached() ) 
+			if (wg->IsGrenadeLauncherAttached()) 
 			{
 				wg->PerformSwitchGL();
 				wg->UnloadMagazine();
@@ -220,20 +218,21 @@ void CInventoryItem::pre_install_upgrade()
 		}
 	}
 
-	CWeapon* weapon = smart_cast<CWeapon*>( this );
-	if ( weapon )
+	if (CWeapon* weapon = cast_weapon())
 	{
-		if ( weapon->ScopeAttachable() && weapon->IsScopeAttached() )
+		if (weapon->ScopeAttachable() && weapon->IsScopeAttached())
 		{
-			weapon->Detach( weapon->GetScopeName().c_str(), true );
+			weapon->Detach(weapon->GetScopeName().c_str(), true);
 		}
-		if ( weapon->SilencerAttachable() && weapon->IsSilencerAttached() )
+
+		if (weapon->SilencerAttachable() && weapon->IsSilencerAttached())
 		{
-			weapon->Detach( weapon->GetSilencerName().c_str(), true );
+			weapon->Detach(weapon->GetSilencerName().c_str(), true);
 		}
-		if ( weapon->GrenadeLauncherAttachable() && weapon->IsGrenadeLauncherAttached() )
+
+		if (weapon->GrenadeLauncherAttachable() && weapon->IsGrenadeLauncherAttached())
 		{
-			weapon->Detach( weapon->GetGrenadeLauncherName().c_str(), true );
+			weapon->Detach(weapon->GetGrenadeLauncherName().c_str(), true);
 		}
 	}
 
