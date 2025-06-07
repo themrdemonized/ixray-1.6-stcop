@@ -48,6 +48,9 @@ public:
 	virtual void	save					(NET_Packet &output_packet);
 	virtual void	load					(IReader &input_packet);
 
+	virtual CGameObject* cast_game_object() { return this; }
+	virtual CLevelChanger* cast_level_changer() { return this; }
+
 #ifdef DEBUG_DRAW
 	virtual void		OnRender();
 #endif
