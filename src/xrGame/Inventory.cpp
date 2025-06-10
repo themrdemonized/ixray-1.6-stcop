@@ -533,7 +533,7 @@ void CInventory::Activate(u16 slot, bool bForce)
 
 	if (CActor* actor = smart_cast<CActor*>(m_pOwner))
 	{
-		if (actor->HudAnimator() && actor->HudAnimator()->IsActive())
+		if (actor->HudAnimatorManager() && actor->HudAnimatorManager()->AnyAnimatorActive())
 		{
 			if (CHudItem* hud_item = smart_cast<CHudItem*>(ActiveItem()))
 			{

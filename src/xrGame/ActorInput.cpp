@@ -91,6 +91,11 @@ void CActor::IR_OnKeyboardPress(int cmd)
 		return;
 	}
 
+	if (HudAnimatorManager()->InputKeyPress(cmd))
+	{
+		return;
+	}
+
 	switch(cmd)
 	{
 	case kJUMP:		
@@ -173,7 +178,7 @@ void CActor::IR_OnKeyboardPress(int cmd)
 	case kQUICK_USE_3:
 	case kQUICK_USE_4:
 		{
-			if (HudAnimator() && HudAnimator()->IsActive())
+			if (HudAnimatorManager() && HudAnimatorManager()->AnyAnimatorActive())
 			{
 				return;
 			}
@@ -524,7 +529,7 @@ bool CActor::use_Holder				(CHolderCustom* holder)
 
 void CActor::ActorUse()
 {
-	if (HudAnimator() && HudAnimator()->IsActive())
+	if (HudAnimatorManager() && HudAnimatorManager()->AnyAnimatorActive())
 	{
 		return;
 	}
@@ -823,10 +828,10 @@ void CActor::SwitchNightVision()
 	{
 		if (m_sNVGAnimator.size() > 0)
 		{
-			if (HudAnimator() && !HudAnimator()->IsActive())
+			if (HudAnimatorManager() && !HudAnimatorManager()->AnyAnimatorActive())
 			{
-				HudAnimator()->StartAnimator(m_sNVGAnimator);
-				HudAnimator()->SetLeftCallback({ GetNightVisionEffector(), &CNightVisionEffector::SwitchNightVision });
+				HudAnimatorManager()->ItemAnimator()->StartAnimator(m_sNVGAnimator);
+				HudAnimatorManager()->ItemAnimator()->SetLeftCallback({GetNightVisionEffector(), &CNightVisionEffector::SwitchNightVision});
 			}
 		}
 		else
@@ -908,10 +913,10 @@ void CActor::SwitchTorch()
 
 		if (m_sHeadlampAnimator.size() > 0)
 		{
-			if (HudAnimator() && !HudAnimator()->IsActive())
+			if (HudAnimatorManager() && !HudAnimatorManager()->AnyAnimatorActive())
 			{
-				HudAnimator()->StartAnimator(m_sHeadlampAnimator);
-				HudAnimator()->SetLeftCallback({ torch, &CTorch::Switch });
+				HudAnimatorManager()->ItemAnimator()->StartAnimator(m_sHeadlampAnimator);
+				HudAnimatorManager()->ItemAnimator()->SetLeftCallback({ torch, &CTorch::Switch });
 			}
 		}
 		else

@@ -186,7 +186,7 @@ void  CCustomDetector::ShowingCallback(CBlend*B)
 void CCustomDetector::switch_detector()
 {
 	CActor* actor = Level().CurrentControlEntity()->cast_actor();
-	if (actor && actor->HudAnimator() && actor->HudAnimator()->IsActive())
+	if (actor && actor->HudAnimatorManager() && actor->HudAnimatorManager()->AnyAnimatorActive())
 	{
 		return;
 	}
@@ -404,7 +404,7 @@ void CCustomDetector::UpdateVisibility()
 	if (m_bNeedActivation)
 	{
 		CActor* actor = Level().CurrentControlEntity()->cast_actor();
-		if (actor && actor->HudAnimator() && actor->HudAnimator()->IsActive())
+		if (actor && actor->HudAnimatorManager() && actor->HudAnimatorManager()->AnyAnimatorActive())
 		{
 			m_bNeedActivation = false;
 			return;

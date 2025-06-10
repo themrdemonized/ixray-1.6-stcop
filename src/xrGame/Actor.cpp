@@ -206,7 +206,7 @@ CActor::CActor() : CEntityAlive(),current_ik_cam_shift(0)
 	m_disabled_hitmarks		= false;
 	m_inventory_disabled	= false;
 
-	m_hud_animator			= new CHudAnimatorManager(this);
+	m_hud_animator_manager	= new CHudAnimatorManager(this);
 
 	// Alex ADD: for smooth crouch
 	CurrentHeight = -1.f;
@@ -249,7 +249,7 @@ CActor::~CActor()
 	xr_delete				(pPickup);
 	xr_delete				(m_vehicle_anims);
 	xr_delete				(m_night_vision);
-	xr_delete				(m_hud_animator);
+	xr_delete				(m_hud_animator_manager);
 	m_rainOnHelmetSnd.destroy();
 }
 
@@ -1232,7 +1232,7 @@ void CActor::UpdateCL()
 
 	CCustomDetector* det = GetDetector();
 
-	if (!g_player_hud->m_need_reload && !HudAnimator()->IsActive())
+	if (!g_player_hud->m_need_reload && !HudAnimatorManager()->AnyAnimatorActive())
 	{
 		CHudItemObject* item = smart_cast<CHudItemObject*>(inventory().ActiveItem());
 
@@ -1335,9 +1335,9 @@ void CActor::UpdateCL()
 		psHUD_Flags.set( HUD_DRAW_RT, true );
 	}
 
-	if (HudAnimator())
+	if (HudAnimatorManager())
 	{
-		HudAnimator()->Update();
+		HudAnimatorManager()->Update();
 	}
 
 	Device.hudViewportData.IsElectronicsProblemsDecreasing = IsElectronicsProblemsDecreasing();

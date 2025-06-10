@@ -25,6 +25,7 @@
 #include "ActorCondition.h"
 #include "level_graph.h"
 #include "HudItem.h"
+#include "HudItemAnimator.h"
 #include "ui/UITalkWnd.h"
 #include "Inventory.h"
 #include "InfoPortion.h"
@@ -2055,9 +2056,9 @@ void CScriptGameObject::StartActorAnimator(LPCSTR section)
 		return;
 	}
 
-	if (pActor->HudAnimator())
+	if (pActor->HudAnimatorManager())
 	{
-		pActor->HudAnimator()->StartAnimator(section);
+		pActor->HudAnimatorManager()->ItemAnimator()->StartAnimator(section);
 	}
 }
 
@@ -2070,9 +2071,9 @@ void CScriptGameObject::StopActorAnimator()
 		return;
 	}
 
-	if (pActor->HudAnimator())
+	if (pActor->HudAnimatorManager())
 	{
-		pActor->HudAnimator()->StopAnimator();
+		pActor->HudAnimatorManager()->ItemAnimator()->StopAnimator();
 	}
 }
 
@@ -2085,7 +2086,7 @@ LPCSTR CScriptGameObject::GetActorAnimatorSection()
 		return "null";
 	}
 
-	return pActor->HudAnimator() ? pActor->HudAnimator()->GetSection().c_str() : "null";
+	return pActor->HudAnimatorManager() ? pActor->HudAnimatorManager()->ItemAnimator()->GetSection().c_str() : "null";
 }
 
 bool CScriptGameObject::IsAnimatorActive()
@@ -2097,7 +2098,7 @@ bool CScriptGameObject::IsAnimatorActive()
 		return false;
 	}
 
-	return pActor->HudAnimator() && pActor->HudAnimator()->IsActive();
+	return pActor->HudAnimatorManager() && pActor->HudAnimatorManager()->ItemAnimator()->IsActive();
 }
 
 u8 CScriptGameObject::GetActorAnimatorRestoredSlot()
@@ -2109,7 +2110,7 @@ u8 CScriptGameObject::GetActorAnimatorRestoredSlot()
 		return 0;
 	}
 
-	return pActor->HudAnimator() ? pActor->HudAnimator()->GetSlotToRestore() : 0;
+	return pActor->HudAnimatorManager() ? pActor->HudAnimatorManager()->ItemAnimator()->GetSlotToRestore() : 0;
 }
 
 bool CScriptGameObject::GetAnimatorForceHideItems()
@@ -2121,7 +2122,7 @@ bool CScriptGameObject::GetAnimatorForceHideItems()
 		return false;
 	}
 
-	return pActor->HudAnimator() && pActor->HudAnimator()->IsForceHideItems();
+	return pActor->HudAnimatorManager() && pActor->HudAnimatorManager()->ItemAnimator()->IsForceHideItems();
 }
 
 void CScriptGameObject::SetAnimatorForceHideItems(bool status)
@@ -2133,9 +2134,9 @@ void CScriptGameObject::SetAnimatorForceHideItems(bool status)
 		return;
 	}
 
-	if (pActor->HudAnimator())
+	if (pActor->HudAnimatorManager())
 	{
-		pActor->HudAnimator()->SetForceHideItems(status);
+		pActor->HudAnimatorManager()->ItemAnimator()->SetForceHideItems(status);
 	}
 }
 

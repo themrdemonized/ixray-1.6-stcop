@@ -1229,7 +1229,7 @@ void player_hud::render_hud()
 	bool b_r0 = (m_attached_items[0] && m_attached_items[0]->need_renderable());
 	bool b_r1 = (m_attached_items[1] && m_attached_items[1]->need_renderable());
 
-	if(b_r0 || b_r1 || m_animator_item && m_animator_item->IsPlaying || m_bhands_visible)
+	if (b_r0 || b_r1 || m_animator_item && m_animator_item->need_renderable() || m_bhands_visible)
 	{
 		::Render->set_Transform(&m_transform);
 		::Render->add_Visual(m_model->dcast_RenderVisual());
@@ -1333,7 +1333,7 @@ const Fvector& player_hud::attach_rot() const
 
 	if (m_animator_item)
 	{
-		return m_last_rot = m_animator_item->m_hands_attach[1];
+		return m_last_rot = m_animator_item->hands_attach_rot();
 	}
 
 	if (m_attached_items[0])
@@ -1352,7 +1352,7 @@ const Fvector& player_hud::attach_pos() const
 
 	if (m_animator_item)
 	{
-		return m_last_pos = m_animator_item->m_hands_attach[0];
+		return m_last_pos = m_animator_item->hands_attach_pos();
 	}
 
 	if (m_attached_items[0])
@@ -1478,8 +1478,14 @@ u32 player_hud::anim_play(u16 part, const MotionID& M, BOOL bMixIn, const CMotio
 
 void player_hud::update_additional	(Fmatrix& trans)
 {
-	if(m_attached_items[0] || m_attached_items[0]&&m_attached_items[1])
+	if (m_animator_item != nullptr)
+	{
+		m_animator_item->update_hud_additional(trans);
+	}
+	else if (m_attached_items[0] || m_attached_items[0] && m_attached_items[1])
+	{
 		m_attached_items[0]->update_hud_additional(trans);
+	}
 	else
 	{
 		if(m_attached_items[1])
@@ -1490,10 +1496,11 @@ void player_hud::update_additional	(Fmatrix& trans)
 void player_hud::update_inertion(Fmatrix& trans)
 {
 	auto hi = m_attached_items[0] ? m_attached_items[0] : m_attached_items[1];
+	auto animator = GetAnimator();
 
-	if (hi)
+	if (hi || animator)
 	{
-		auto& inertion = hi->m_parent_hud_item->CurrentInertionData();
+		auto& inertion = animator ? animator->m_animator_parent->CurrentInertionData() : hi->m_parent_hud_item->CurrentInertionData();
 
 		Fmatrix								xform;
 		Fvector& origin						= trans.c; 
@@ -2033,7 +2040,7 @@ void player_hud::load_default()
 	load(actorHudDefault);
 }
 
-animator_item* player_hud::create_animator_item(const shared_str& section)
+animator_item* player_hud::create_animator_item(CHudAnimatorBase* m_pAnimator, const shared_str& section)
 {
 	if (m_animator_item && m_animator_item->m_section != section)
 	{
@@ -2042,7 +2049,7 @@ animator_item* player_hud::create_animator_item(const shared_str& section)
 
 	if (!m_animator_item)
 	{
-		m_animator_item = new animator_item(this, section);
+		m_animator_item = new animator_item(m_pAnimator, this, section);
 	}
 
 	return m_animator_item;
@@ -2056,11 +2063,8 @@ void player_hud::delete_animator_item()
 	}
 }
 
-animator_item::animator_item(player_hud* pParent, const shared_str& section)
+animator_item::animator_item(CHudAnimatorBase* m_pAnimator, player_hud* pParent, const shared_str& section) : m_parent(pParent), m_section(section), m_animator_parent(m_pAnimator)
 {
-	m_section = section;
-	m_parent = pParent;
-
 	if (pSettings->line_exist(section, "item_visual"))
 	{
 		const shared_str& visual_name = pSettings->r_string(section, "item_visual");
@@ -2075,12 +2079,8 @@ animator_item::animator_item(player_hud* pParent, const shared_str& section)
 	xr_sprintf(_prefix, "%s", is_16x9 ? "_16x9" : "");
 	string128 val_name;
 
-	xr_strconcat(val_name, "hands_position", _prefix);
-	m_hands_attach[0] = pSettings->r_fvector3(section, val_name);
-	xr_strconcat(val_name, "hands_orientation", _prefix);
-	m_hands_attach[1] = pSettings->r_fvector3(section, val_name);
-
 	m_hand_motions.load(pParent->GetModel(), section);
+	m_hands_positions.Load(section, is_16x9);
 }
 
 animator_item::~animator_item()
@@ -2216,4 +2216,27 @@ u32 animator_item::anim_play(const shared_str& anm_name_b, BOOL bMixIn, const CM
 		}
 	}
 	return ret;
+}
+
+bool animator_item::need_renderable()
+{
+	return m_animator_parent->need_renderable();
+}
+
+void animator_item::update_hud_additional(Fmatrix& trans)
+{
+	if (m_animator_parent)
+	{
+		m_animator_parent->UpdateHudAdditonal(trans);
+	}
+}
+
+Fvector& animator_item::hands_attach_pos()
+{
+	return m_hands_positions.hands_offsets[0][0];
+}
+
+Fvector& animator_item::hands_attach_rot()
+{
+	return m_hands_positions.hands_offsets[0][1];
 }
