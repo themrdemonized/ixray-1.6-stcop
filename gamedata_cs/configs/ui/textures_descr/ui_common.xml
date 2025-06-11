@@ -403,12 +403,14 @@
     <texture id="ui_beltbut_silencer_t" x="697" y="808" width="23" height="23" />
     <texture id="ui_buymenu_progBar" x="302" y="206" width="151" height="7" />
     <texture id="ui_buymenu_progBar_Smaller" x="302" y="206" width="121" height="7" />
-    <texture id="ui_cb_linetext_e_back" x="974" y="0" width="25" height="23" />
+    <texture id="ui_cb_linetext_e_back" x="974" y="0" width="25" height="23" /> <!-- center -->
     <texture id="ui_cb_linetext_h_back" x="974" y="23" width="25" height="23" />
-    <texture id="ui_cb_linetext_e_b" x="954" y="0" width="25" height="23" />
+    <texture id="ui_cb_linetext_e_b" x="954" y="0" width="25" height="23" /> <!-- left top -->
     <texture id="ui_cb_linetext_h_b" x="954" y="23" width="25" height="23" />
-    <texture id="ui_cb_linetext_e_e" x="186" y="180" width="25" height="23" />
-    <texture id="ui_cb_linetext_h_e" x="277" y="206" width="25" height="23" />
+    <texture id="ui_cb_linetext_e_e" x="974" y="0" width="25" height="23" /> <!-- right bottom -->
+    <texture id="ui_cb_linetext_h_e" x="974" y="23" width="25" height="23" />
+    <texture id="ui_cb_arrow_e" x="186" y="180" width="25" height="23" />
+    <texture id="ui_cb_arrow_h" x="277" y="206" width="25" height="23" />
     <texture id="ui_cb_button_e" x="186" y="180" width="25" height="23" />
     <texture id="ui_cb_button_d" x="999" y="0" width="25" height="23" />
     <texture id="ui_cb_button_t" x="999" y="23" width="25" height="23" />
