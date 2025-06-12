@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UIWindow.h"
+#include "UIStatic.h"
 
 class UI_API CUIFrameLineWnd: 
 	public CUIWindow
@@ -34,6 +35,9 @@ public:
 				R_ASSERT(idx >= flFirst && idx <= flSecond);
 				m_tex_rect[idx] = rect;
 			}
+			// Also we can display textual caption on the frame
+			CUIStatic UITitleText;
+			CUIStatic* GetTitleStatic() { return &UITitleText; };
 
 protected:
 	bool			bHorizontal;
