@@ -269,7 +269,7 @@ void CConsole::OnRender()
 
 	m_line_height = 2.0f * pFont->CurrentHeight_() / float(Device.TargetHeight);
 
-	bool bGame = (g_pGameLevel && g_pGameLevel->bReady) || (g_pGamePersistent && g_pGamePersistent->m_pMainMenu && g_pGamePersistent->m_pMainMenu->IsActive());
+	bool bGame = g_dedicated_server ? false : ((g_pGameLevel && g_pGameLevel->bReady) || (g_pGamePersistent && g_pGamePersistent->m_pMainMenu && g_pGamePersistent->m_pMainMenu->IsActive()));
 	DrawBackgrounds( bGame );
 	
 	float fMaxY = bGame ? 0.0f : 1.0f;
