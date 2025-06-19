@@ -64,9 +64,11 @@ void CUIComboBox::InitComboBox(Fvector2 pos, float width)
 	m_frameLine.InitState(S_Highlighted, frameLineHighlighted);
 	m_frameLine.InitState(S_Enabled, frameLineDefault);
 
-	m_arrow.InitIB(Fvector2().set(width - arrowWidth, 0.0f), Fvector2().set(0.f, comboBoxHeight));
+	m_arrow.InitIB(Fvector2().set(width - (arrowWidth * UI().get_current_kx()), 0.0f), Fvector2().set(0.f, comboBoxHeight));
 	m_arrow.InitState(S_Highlighted, arrow_h);
 	m_arrow.InitState(S_Enabled, arrow_e);
+	m_arrow.SetStretchTexture(true);
+	m_arrow.SetWidth(arrowWidth * UI().get_current_kx());
 
 	// Edit Box on left side of frame line
 	m_text.SetWndPos					(Fvector2().set(lb_text_offset,0.0f));
