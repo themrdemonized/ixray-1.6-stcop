@@ -252,6 +252,7 @@ function turn(npc, st)
 			dir.y = 0
 		end
 		printf("SET_SIGHT!!!turn(npc, st)")
+		dir:normalize()
 		npc:set_sight(look.direction, dir, true)
 	end
 end
