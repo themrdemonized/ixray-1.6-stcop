@@ -160,6 +160,7 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	
 	bool b_r2				= !!psDeviceFlags.test(rsR2);
 	b_r2					|= !!psDeviceFlags.test(rsR4);
+	b_r2					= false;
 
 	IKinematics* K			= PKinematics(Visual());
 	CInifile* pUserData		= K->LL_UserData(); 
