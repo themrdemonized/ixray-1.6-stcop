@@ -64,7 +64,7 @@ void CUIChangeMap::InitChangeMap(CUIXml& xml_doc)
 	CUIXmlInit::InitTextWnd				(xml_doc,			"change_map:map_ver_txt", 0, map_version);
 	CUIXmlInit::InitStatic				(xml_doc,			"change_map:map_pic", 0, map_pic); 
 	CUIXmlInit::InitFrameWindow			(xml_doc,			"change_map:list_back", 0, lst_back, false);
-	CUIXmlInit::InitFrameWindow			(xml_doc,			"change_map:frame", 0, frame), false;
+	CUIXmlInit::InitFrameWindow			(xml_doc,			"change_map:frame", 0, frame, false);
 	CUIXmlInit::InitListBox				(xml_doc,			"change_map:list", 0, lst);
 	CUIXmlInit::Init3tButton			(xml_doc,			"change_map:btn_ok", 0, btn_ok);
 	CUIXmlInit::Init3tButton			(xml_doc,			"change_map:btn_cancel", 0, btn_cancel);
