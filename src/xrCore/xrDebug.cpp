@@ -16,6 +16,8 @@
 #	include <dxerr.h>
 #endif
 
+#include "../xrPlay/chezzeRun.h"
+
 #pragma warning(pop)
 
 extern bool shared_str_initialized;
