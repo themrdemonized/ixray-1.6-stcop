@@ -929,14 +929,13 @@ DetailPathManager::EDetailPathType CScriptGameObject::detail_path_type	() const
 	return			(DetailPathManager::eDetailPathTypeSmooth);
 }
 
-bool is_cop = EngineExternal().CallOfPripyatMode();
 void CScriptGameObject::set_sight(SightManager::ESightType sight_type, Fvector *vector3d, u32 dwLookOverDelay)
 {
 	CAI_Stalker	*stalker = smart_cast<CAI_Stalker*>(&object());
 	if (!stalker)
 		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "CSightManager : cannot access class member set_sight!");
 	else {
-		if (is_cop && (sight_type == SightManager::eSightTypeDirection) && vector3d && (_abs(vector3d->magnitude() - 1.f) > .01f)) { // just for cop
+		if ((sight_type == SightManager::eSightTypeDirection) && vector3d && (_abs(vector3d->magnitude() - 1.f) > .01f)) {
 			VERIFY2(false, make_string<const char*>("non-normalized direction passed [%f][%f][%f]", VPUSH(*vector3d)));
 		}
 
